@@ -1,0 +1,105 @@
+package rysunek2d;
+
+/**
+ *
+ * @author Marta
+ */
+
+
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import java.awt.BasicStroke;
+import java.util.Random;
+class Surface extends JPanel {
+    
+    private void doDrawing(Graphics g) {
+        
+        Graphics2D g2d = (Graphics2D) g.create();
+
+        g2d.setPaint(Color.gray);
+
+        int w = getWidth();
+        int h = getHeight();
+
+        Random r = new Random();
+
+        for (int i = 0; i < 2000; i++) {
+
+            int x = Math.abs(r.nextInt()) % w;
+            int y = Math.abs(r.nextInt()) % h;
+            g2d.drawLine(x, y, x, y);
+        }
+
+        
+        GradientPaint gp1 = new GradientPaint(5, 15, 
+            Color.green, 20, 10, Color.red, true);
+        
+        g2d.setPaint(gp1);
+        BasicStroke bs1 = new BasicStroke(8, BasicStroke.CAP_ROUND,
+        BasicStroke.JOIN_BEVEL);
+        g2d.setStroke(bs1);
+        g2d.drawRect(100, 160, 150, 120);
+        
+        g2d.setPaint(Color.red);
+        g2d.drawLine(250, 160, 175, 60);
+        g2d.drawLine(175, 60, 100, 160);  
+   
+        g2d.drawRect(120, 200, 30, 30);
+        g2d.drawRect(200, 200, 30, 30);
+        g2d.drawRect(160, 210, 30, 70);
+        
+        g2d.setPaint(Color.white);
+        g2d.fillOval(270, 130, 70, 80);
+        g2d.fillOval(15, 130, 70, 80);
+        
+        g2d.setPaint(Color.gray);
+        g2d.drawLine(50, 260, 50, 200);
+        g2d.drawLine(305, 260, 305, 200);
+        
+        g2d.setPaint(Color.black);
+        BasicStroke bs2 = new BasicStroke(6, BasicStroke.CAP_ROUND,
+                BasicStroke.JOIN_MITER);
+        g2d.setStroke(bs2);
+        g2d.drawRect(5, 5, 350, 300);
+        g2d.dispose();
+     
+    }
+
+    @Override
+    public void paintComponent(Graphics g) {
+        
+        super.paintComponent(g);
+        doDrawing(g);
+    }
+}
+
+public class GradientsEx extends JFrame {
+    
+    public GradientsEx() {
+
+        initUI();
+    }    
+    
+    private void initUI() {
+        
+        add(new Surface());
+        
+        setTitle("Gradients");
+        setSize(350, 350);
+        setLocationRelativeTo(null);            
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+    
+    public static void main(String[] args) {
+
+        EventQueue.invokeLater(() -> {
+            GradientsEx ex = new GradientsEx();
+            ex.setVisible(true);
+        });
+    }    
+}
